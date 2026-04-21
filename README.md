@@ -31,6 +31,11 @@ raw (Snowflake) → staging (dbt) → marts (dbt)
 - Unique and not_null checks on primary keys
 - Accepted values validation on order status
 
+## Dashboard
+Built in both Power BI and Looker Studio connecting directly to Snowflake.
+
+![Dashboard](dashboard.png)
+
 ## How to Run
 1. Clone this repo
 2. Install dbt: `pip install dbt-snowflake`
