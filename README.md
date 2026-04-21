@@ -31,6 +31,10 @@ raw (Snowflake) → staging (dbt) → marts (dbt)
 - Unique and not_null checks on primary keys
 - Accepted values validation on order status
 
+## Data Lineage
+
+![Lineage Graph](lineage.png)
+
 ## Dashboard
 Built in both Power BI and Looker Studio connecting directly to Snowflake.
 
