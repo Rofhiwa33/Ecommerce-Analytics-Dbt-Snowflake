@@ -32,7 +32,6 @@ raw (Snowflake) → staging (dbt) → marts (dbt)
 - Accepted values validation on order status
 
 ## Data Lineage
-
 ![Lineage Graph](lineage.png)
 
 ## Dashboard
