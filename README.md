@@ -32,7 +32,7 @@ raw (Snowflake) → staging (dbt) → marts (dbt)
 - Accepted values validation on order status
 
 ## Data Lineage
-![Lineage Graph](lineage.png)
+![Lineage Graph](lineage_graph.png)
 
 ## Dashboard
 Built in both Power BI and Looker Studio connecting directly to Snowflake.
