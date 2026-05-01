@@ -1,0 +1,83 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Cleaned customer data, one row per customer. Sourced from raw_customers."
+    columns:
+      - name: customer_id
+        description: "Unique identifier for the customer. Primary key."
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: "Customer's first name."
+      - name: last_name
+        description: "Customer's last name."
+      - name: full_name
+        description: "Concatenation of first_name and last_name."
+      - name: email
+        description: "Customer email address. Used as a secondary unique identifier."
+        tests:
+          - unique
+          - not_null
+      - name: country
+        description: "Customer's country of registration."
+
+  - name: stg_orders
+    description: "Cleaned order data, one row per order. Includes completed_amount for revenue analysis."
+    columns:
+      - name: order_id
+        description: "Unique identifier for the order. Primary key."
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Foreign key to stg_customers."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: product_id
+        description: "Foreign key to stg_products."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
+      - name: order_date
+        description: "Date the order was placed."
+        tests:
+          - not_null
+      - name: status
+        description: "Order lifecycle status."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['completed', 'pending', 'returned']
+      - name: amount
+        description: "Total order amount in local currency."
+      - name: completed_amount
+        description: "Order amount if status is 'completed', else 0. Pre-calculated to simplify revenue queries."
+
+  - name: stg_products
+    description: "Cleaned product catalogue, one row per product. Sourced from raw_products."
+    columns:
+      - name: product_id
+        description: "Unique identifier for the product. Primary key."
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: "Display name of the product."
+        tests:
+          - not_null
+      - name: category
+        description: "Product category for grouping in analytics."
+        tests:
+          - not_null
+      - name: price
+        description: "Unit price of the product."
+        tests:
+          - not_null

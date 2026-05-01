@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: fct_sales
+    description: |
+      Order-grain sales fact table. Each row is a single order enriched with
+      customer and product attributes. This is the primary fact consumed by
+      the Power BI dashboard for detailed sales analysis.
+    columns:
+      - name: order_id
+        description: "Unique identifier for the order. Primary key."
+        tests:
+          - unique
+          - not_null
+      - name: completed_amount
+        description: "Revenue contribution of the order (0 if not completed)."
+        tests:
+          - not_null
+
+  - name: agg_sales_by_category
+    description: |
+      Monthly sales aggregated by customer country and product category.
+      Pre-computed for fast dashboard queries — avoids re-aggregating
+      fct_sales on every Power BI refresh. Filtered to completed orders only.
+    columns:
+      - name: sale_month
+        description: "First day of the month the order was placed in."
+        tests:
+          - not_null
+      - name: customer_country
+        description: "Country of the customers in this aggregation group."
+      - name: product_category
+        description: "Product category in this aggregation group."
+      - name: total_revenue
+        description: "Sum of completed_amount for the group."
+        tests:
+          - not_null

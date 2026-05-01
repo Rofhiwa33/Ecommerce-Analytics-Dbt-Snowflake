@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: int_orders_enriched
+    description: |
+      Enriched orders fact at order grain. Joins stg_orders with stg_customers
+      and stg_products to produce a single dataset with all dimensions attached.
+      Used as the foundation for marts.
+    columns:
+      - name: order_id
+        description: "Unique identifier for the order. Primary key."
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Foreign key to stg_customers."
+        tests:
+          - not_null
+      - name: product_id
+        description: "Foreign key to stg_products."
+        tests:
+          - not_null
+      - name: customer_country
+        description: "Country of the customer who placed the order."
+      - name: product_category
+        description: "Category of the product ordered."

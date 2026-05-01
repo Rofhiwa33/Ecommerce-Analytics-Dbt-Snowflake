@@ -6,12 +6,13 @@ renamed as (
     select
         order_id,
         customer_id,
+        product_id,
         order_date,
         status,
         amount,
-        case 
-            when status = 'completed' then amount 
-            else 0 
+        case
+            when status = 'completed' then amount
+            else 0
         end as completed_amount
     from source
 )
